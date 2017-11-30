@@ -10,7 +10,9 @@ current directory is the project root of this project
 the gem is built and installed
   and
 the executable is run from the gem without preceding it with 'ruby'
-(i.e.
+and
+the executable is run without specifying a directory
+(i.e. as 'underscore_file_test', not 'bin/underscore_file_test')
 
 Then
   __FILE__ => $PROJECT_ROOT/exe/underscore_file_test
@@ -18,7 +20,7 @@ instead of pointing to a directory in the GEM_PATH, something like:
   __FILE__ => /Users/kbennett/.rvm/gems/ruby-2.4.1/bin/underscore_file_test
 ```
 
-This was tested on the following rubies that did not exhibit the problem:
+This error occurred with Ruby 2.4.1 but not:
 
 * 2.0.0-p648
 * 2.3.1
