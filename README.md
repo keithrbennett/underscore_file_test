@@ -1,39 +1,39 @@
 # UnderscoreFileTest
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/underscore_file_test`. To experiment with that code, run `bin/console` for an interactive prompt.
+This illustrates what I believe to be a bug in Ruby 2.4.1.
 
-TODO: Delete this and the text above, and describe your gem
+```
+When Ruby version == 2.4.1
+  and
+current directory is the project root of this project
+  and
+the gem is built and installed
+  and
+the executable is run from the gem without preceding it with 'ruby'
+(i.e.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'underscore_file_test'
+Then
+  __FILE__ => $PROJECT_ROOT/exe/underscore_file_test
+instead of pointing to a directory in the GEM_PATH, something like:
+  __FILE__ => /Users/kbennett/.rvm/gems/ruby-2.4.1/bin/underscore_file_test
 ```
 
-And then execute:
+This was tested on the following rubies that did not exhibit the problem:
 
-    $ bundle
+* 2.0.0-p648
+* 2.3.1
+* 2.4.0
+* jruby-9.1.7.0
 
-Or install it yourself as:
+## Steps to Reproduce:
 
-    $ gem install underscore_file_test
+* Download or git clone this project tree.
+* Change directory to the project root.
+* Run: `clear; gem build *gemspec && gem install *gem && underscore_file_test`
+* Note the directory component of the output.
 
-## Usage
+If you cd somewhere else, the output will be correct,
+i.e. will be located in a GEM_PATH directory.
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/underscore_file_test.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+If you run the command from the project root using a different Ruby,
+it may work. I have not tested this on versions _later than_ 2.4.1.
